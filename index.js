@@ -2,8 +2,9 @@
 
 const yargs = require('yargs');
 const path = require('path');
+const fs = require('fs');
 
-const { sizes, inputs } = yargs
+const { inputs, sizes } = yargs
   .options({
     inputs: {
       alias: 'i',
@@ -18,6 +19,17 @@ const { sizes, inputs } = yargs
       demandOption: true,
     },
   })
+  .check(({ inputs, sizes }) => validateInputs(inputs))
   .argv;
 
 console.log(inputs, sizes);
+
+function validateInputs(inputs) {
+  const nonExistentFile = inputs.find(file => !fs.existsSync(file));
+
+  if (nonExistentFile) {
+    throw new Error(`Error: Could not find file "${nonExistentFile}"`);
+  }
+
+  return true;
+}
