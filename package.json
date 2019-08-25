@@ -4,6 +4,9 @@
   "description": "Dead simple SVG to PNG converter using Puppeteer",
   "private": true,
   "main": "index.js",
+  "dependencies": {
+    "puppeteer": "^1.19.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jerry1100/svg2png.git"
