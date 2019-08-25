@@ -1,3 +1,13 @@
 #!/usr/bin/env node
 
-console.log('Hello world');
+const yargs = require('yargs');
+const path = require('path');
+
+const { sizes, input } = yargs
+  .alias('input', 'i')
+  .array('input')
+  .alias('sizes', 's')
+  .array('sizes')
+  .argv;
+
+console.log(input, sizes);
