@@ -21,39 +21,32 @@ const { inputs, sizes } = yargs
       demandOption: true,
     },
   })
-  .check(({ inputs, sizes }) => validateInputs(inputs) && validateSizes(sizes))
+  .coerce('inputs', inputs => inputs.map(validateAndTransformFile))
+  .coerce('sizes', sizes => sizes.map(validateAndTransformSize))
   .argv;
 
 console.log(inputs, sizes);
 
-function validateInputs(inputs) {
-  const nonExistentFile = inputs.find(file => !fs.existsSync(file));
+function validateAndTransformFile(file) {
+  const resolvedFileName = path.resolve(file);
 
-  if (nonExistentFile) {
-    throw new Error(`Error: Could not find file "${nonExistentFile}"`);
+  if (!fs.existsSync(resolvedFileName)) {
+    throw new Error(`Error: Could not find file "${resolvedFileName}"`);
   }
 
-  return true;
+  return path.resolve(resolvedFileName);
 }
 
-function validateSizes(sizes) {
-  const splitSizes = sizes.map(size => size.split('x'));
+function validateAndTransformSize(size) {
+  const [width, height] = size.split('x').map(dimension => Number(dimension));
 
-  const sizeWithMissingDimensions = splitSizes.find(size => size.length < 2);
-
-  if (sizeWithMissingDimensions) {
-    throw new Error(`Error: Missing width or height for size "${sizeWithMissingDimensions}"`);
+  if (width === undefined || height === undefined) {
+    throw new Error(`Error: Missing width or height for size "${size}"`);
   }
 
-  const sizeWithInvalidDimensions = splitSizes.find(dimensions => !isValidDimensions(dimensions));
-
-  if (sizeWithInvalidDimensions) {
-    throw new Error(`Error: Invalid width or height for size "${sizeWithInvalidDimensions.join('x')}"`);
+  if (isNaN(width) || isNaN(height) || width < 1 || height < 1) {
+    throw new Error(`Error: Invalid width or height for size "${size}"`);
   }
 
-  return true;
-}
-
-function isValidDimensions([width, height]) {
-  return !isNaN(width) && !isNaN(height) && Number(width) > 0 && Number(height) > 0;
+  return [width, height];
 }
