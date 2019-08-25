@@ -5,7 +5,8 @@
   "private": true,
   "bin": "./index.js",
   "dependencies": {
-    "puppeteer": "^1.19.0"
+    "puppeteer": "^1.19.0",
+    "yargs": "^14.0.0"
   },
   "repository": {
     "type": "git",
