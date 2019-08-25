@@ -34,6 +34,10 @@ function validateAndTransformFile(file) {
     throw new Error(`Error: Could not find file "${resolvedFileName}"`);
   }
 
+  if (path.extname(resolvedFileName) !== '.svg') {
+    throw new Error(`Error: File is not an SVG "${resolvedFileName}"`);
+  }
+
   return path.resolve(resolvedFileName);
 }
 
