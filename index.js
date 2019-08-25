@@ -3,9 +3,9 @@
 const yargs = require('yargs');
 const path = require('path');
 
-const { sizes, input } = yargs
+const { sizes, inputs } = yargs
   .options({
-    input: {
+    inputs: {
       alias: 'i',
       array: true,
       describe: 'File(s) to convert, e.g. icon.svg',
@@ -20,4 +20,4 @@ const { sizes, input } = yargs
   })
   .argv;
 
-console.log(input, sizes);
+console.log(inputs, sizes);
