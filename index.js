@@ -57,10 +57,10 @@ function validateAndTransformSize(size) {
     throw new Error(`Error: Invalid width or height for size "${size}"`);
   }
 
-  return [width, height];
+  return { width, height };
 }
 
-async function takeScreenshot(browser, file, [width, height]) {
+async function takeScreenshot(browser, file, { width, height }) {
   const outPath = path.join(__dirname, `${path.basename(file, '.svg')}_${width}x${height}.png`);
   const page = await browser.newPage();
   await page.goto(`file://${file}`);
