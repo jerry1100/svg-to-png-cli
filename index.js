@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const puppeteer = require('puppeteer');
 const yargs = require('yargs');
 const path = require('path');
 const fs = require('fs');
@@ -25,7 +26,11 @@ const { inputs, sizes } = yargs
   .coerce('sizes', sizes => sizes.map(validateAndTransformSize))
   .argv;
 
-console.log(inputs, sizes);
+inputs.forEach(async file => {
+  const browser = await puppeteer.launch();
+  await Promise.all(sizes.map(dimensions => takeScreenshot(browser, file, dimensions)));
+  await browser.close();
+});
 
 function validateAndTransformFile(file) {
   const resolvedFileName = path.resolve(file);
@@ -53,4 +58,12 @@ function validateAndTransformSize(size) {
   }
 
   return [width, height];
+}
+
+async function takeScreenshot(browser, file, [width, height]) {
+  const outPath = path.join(__dirname, `${path.basename(file, '.svg')}_${width}x${height}.png`);
+  const page = await browser.newPage();
+  await page.goto(`file://${file}`);
+  await page.setViewport({ width, height });
+  await page.screenshot({ path: outPath, omitBackground: true });
 }
