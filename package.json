@@ -1,5 +1,5 @@
 {
-  "name": "svg2png",
+  "name": "svg-to-png-cli",
   "version": "1.0.0",
   "description": "Dead simple SVG to PNG converter using Puppeteer",
   "bin": "./index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jerry1100/svg2png.git"
+    "url": "git+https://github.com/jerry1100/svg-to-png-cli.git"
   },
   "author": {
     "name": "Jerry Wu",
@@ -18,7 +18,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jerry1100/svg2png/issues"
+    "url": "https://github.com/jerry1100/svg-to-png-cli/issues"
   },
-  "homepage": "https://github.com/jerry1100/svg2png#readme"
+  "homepage": "https://github.com/jerry1100/svg-to-png-cli#readme"
 }
