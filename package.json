@@ -1,6 +1,6 @@
 {
   "name": "svg-to-png-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dead simple SVG to PNG converter using Puppeteer",
   "bin": {
     "svg-to-png": "./index.js"
