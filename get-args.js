@@ -15,7 +15,7 @@ module.exports = yargs
       alias: 's',
       array: true,
       type: 'string',
-      describe: 'Size(s) to generate, e.g. 32x32',
+      describe: 'Size(s) to generate, e.g. 32, or 32x48',
       demandOption: true,
     },
   })
@@ -40,13 +40,21 @@ function validateAndTransformFile(file) {
 function validateAndTransformSize(size) {
   const [width, height] = size.split('x').map(dimension => Number(dimension));
 
-  if (width === undefined || height === undefined) {
-    throw new Error(`Error: Missing width or height for size "${size}"`);
+  if (width === undefined) {
+    throw new Error('Error: Size needs at least a width');
   }
 
-  if (isNaN(width) || isNaN(height) || width < 1 || height < 1) {
-    throw new Error(`Error: Invalid width or height for size "${size}"`);
+  if (!isValidSize(width)) {
+    throw new Error(`Error: Invalid width for size "${size}"`);
+  }
+
+  if (height !== undefined && !isValidSize(height)) {
+    throw new Error(`Error: Invalid height for size "${size}"`);
   }
 
   return { width, height };
+}
+
+function isValidSize(number) {
+  return !isNaN(number) && number > 0;
 }

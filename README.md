@@ -10,12 +10,15 @@ npm install -g svg-to-png-cli
 
 ### Usage
 ```sh
-# One SVG, one dimension
-svg-to-png -i icon1.svg -s 16x16
+# One SVG, one size (square)
+svg-to-png -i icon1.svg -s 16
 
-# One SVG, multiple dimensions
-svg-to-png -i icon1.svg -s 16x16 32x32 64x64
+# One SVG, one size (custom)
+svg-to-png -i icon1.svg -s 16x32
 
-# Multiple SVGs, multiple dimensions
+# One SVG, multiple sizes
+svg-to-png -i icon1.svg -s 16x32 32x64 64x128
+
+# Multiple SVGs, multiple sizes
 svg-to-png -i icon1.svg icon2.svg icon3.svg -s 16x16 32x32 64x64
 ```

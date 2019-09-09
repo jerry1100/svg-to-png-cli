@@ -11,9 +11,12 @@ inputs.forEach(async file => {
 });
 
 async function generatePNG(browser, file, { width, height }) {
-  const pngName = `${path.basename(file, '.svg')}${width}x${height}.png`;
+  const basename = path.basename(file, '.svg');
+  const dimensions = height === undefined ? width : `${width}x${height}`;
+  const pngName = `${basename}${dimensions}.png`;
+
   const page = await browser.newPage();
   await page.goto(`file://${file}`);
-  await page.setViewport({ width, height });
+  await page.setViewport({ width, height: height === undefined ? width : height });
   await page.screenshot({ path: pngName, omitBackground: true });
 }
